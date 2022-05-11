@@ -7,21 +7,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "name is required"],
   },
-  rollno: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   email: {
     type: String,
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, "Please Provide valid email"],
-  },
-  role: {
-    type: String,
-    enum: ["admin", "student", "teacher"],
-    default: "student",
   },
   photo: {
     type: String,
