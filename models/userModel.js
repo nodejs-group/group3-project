@@ -11,11 +11,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     lowercase: true,
+    required: [true, "email is required"],
     validate: [validator.isEmail, "Please Provide valid email"],
-  },
-  photo: {
-    type: String,
-    default: "default.jpg",
   },
   password: {
     type: String,
@@ -33,19 +30,19 @@ const userSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    require: true,
-    min: 3,
-    max: 20,
+    require: [true, "username is required"],
+    min: [3, "username must be at least 3 characters"],
+    max: [20, "username can have at most 20 characters"],
     unique: true,
   },
 
   profilePicture: {
     type: String,
-    default: "",
+    default: "default.jpg",
   },
   coverPicture: {
     type: String,
-    default: "",
+    default: "default-cover.jpg",
   },
   followers: {
     type: Array,
@@ -55,22 +52,22 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  desc: {
-    type: String,
-    max: 50,
-  },
-  city: {
-    type: String,
-    max: 50,
-  },
-  from: {
-    type: String,
-    max: 50,
-  },
+  // isAdmin: {
+  //   type: Boolean,
+  //   default: false,
+  // },
+  // desc: {
+  //   type: String,
+  //   max: 50,
+  // },
+  // city: {
+  //   type: String,
+  //   max: 50,
+  // },
+  // from: {
+  //   type: String,
+  //   max: 50,
+  // },
 });
 
 userSchema.pre("save", async function (next) {
