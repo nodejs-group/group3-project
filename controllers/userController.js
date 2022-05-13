@@ -1,13 +1,12 @@
-const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
+const User = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 //update user
 exports.updateUser = async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     if (req.body.password) {
       try {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
+        req.body.password = await bcrypt.hash(req.body.password, 10);
       } catch (err) {
         return res.status(500).json(err);
       }
@@ -16,12 +15,12 @@ exports.updateUser = async (req, res) => {
       const user = await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      res.status(200).json("Account has been updated");
+      res.status(200).json('Account has been updated');
     } catch (err) {
       return res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("You can update only your account!");
+    return res.status(403).json('You can update only your account!');
   }
 };
 
@@ -30,12 +29,12 @@ exports.deleteUser = async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Account has been deleted");
+      res.status(200).json('Account has been deleted');
     } catch (err) {
       return res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("You can delete only your account!");
+    return res.status(403).json('You can delete only your account!');
   }
 };
 
@@ -58,15 +57,15 @@ exports.followUser = async (req, res) => {
       if (!user.followers.includes(req.body.userId)) {
         await user.updateOne({ $push: { followers: req.body.userId } });
         await currentUser.updateOne({ $push: { followings: req.params.id } });
-        res.status(200).json("user has been followed");
+        res.status(200).json('user has been followed');
       } else {
-        res.status(403).json("you allready follow this user");
+        res.status(403).json('you allready follow this user');
       }
     } catch (err) {
       res.status(500).json(err);
     }
   } else {
-    res.status(403).json("you cant follow yourself");
+    res.status(403).json('you cant follow yourself');
   }
 };
 
@@ -79,14 +78,14 @@ exports.unfollowUser = async (req, res) => {
       if (user.followers.includes(req.body.userId)) {
         await user.updateOne({ $pull: { followers: req.body.userId } });
         await currentUser.updateOne({ $pull: { followings: req.params.id } });
-        res.status(200).json("user has been unfollowed");
+        res.status(200).json('user has been unfollowed');
       } else {
-        res.status(403).json("you dont follow this user");
+        res.status(403).json('you dont follow this user');
       }
     } catch (err) {
       res.status(500).json(err);
     }
   } else {
-    res.status(403).json("you cant unfollow yourself");
+    res.status(403).json('you cant unfollow yourself');
   }
 };
