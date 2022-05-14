@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-
+const vara = 0;
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
 const postRouter = require('./routes/postRoutes');
@@ -10,7 +10,7 @@ const app = express();
 
 // MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+    app.use(morgan('dev'));
 }
 
 app.use(express.json());
