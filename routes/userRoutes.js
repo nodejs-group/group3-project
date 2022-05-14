@@ -1,13 +1,16 @@
 const express = require('express');
 const userController = require('./../controllers/userController');
+const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
 router
-  .route('/:id')
-  .put(userController.updateUser)
-  .delete(userController.deleteUser)
-  .get(userController.getUser);
+  .route('/me')
+  .put(authController.validateUser, userController.updateUser)
+  .delete(authController.validateUser, userController.deleteUser)
+  .get(authController.validateUser, userController.getMe);
+
+router.get('/:id', userController.getUser);
 
 router.route('/:id/follow').put(userController.followUser);
 

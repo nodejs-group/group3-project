@@ -35,11 +35,10 @@ exports.getAllPosts = async (req, res, next) => {
 };
 
 exports.addComment = async (req, res) => {
-  console.log(req.body);
   try {
     const comment = await Comment.create({
-      post: req.params.postid,
-      user: req.body.user,
+      post: req.params.postId,
+      user: req.user.id,
       comment: req.body.comment,
     });
     res.status(200).json({
@@ -56,8 +55,8 @@ exports.addComment = async (req, res) => {
 
 exports.getCommentsOnPost = async (req, res) => {
   try {
-    const { postid } = req.params;
-    const comments = await Comment.find({ post: postid });
+    const { postId } = req.params;
+    const comments = await Comment.find({ post: postId });
     res.status(200).json({
       status: 'success',
       comments,
@@ -67,5 +66,31 @@ exports.getCommentsOnPost = async (req, res) => {
       status: 'error',
       error: err.message,
     });
+  }
+};
+
+exports.likeAPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    post.nLikes++;
+    post.save();
+    res.status(200).json({
+      status: 'success',
+      message: 'post liked successfully',
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'error',
+      message: err.message,
+    });
+  }
+};
+
+exports.getAllLikes = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    res.status(200).json({ status: 'ok', likes: post.nLikes });
+  } catch (err) {
+    res.status(400).json({ status: 'error', message: err.message });
   }
 };
