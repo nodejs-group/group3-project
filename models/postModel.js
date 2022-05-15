@@ -15,11 +15,11 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  nLikes: {
+  likeCount: {
     type: Number,
     default: 0,
   },
-  nComments: {
+  commentCount: {
     type: Number,
     default: 0,
   },
