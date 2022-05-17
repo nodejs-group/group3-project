@@ -76,6 +76,7 @@ exports.logoutUser = (req, res) => {
   res.clearCookie('jwt');
   res.status(200).json({ status: 'success' });
 };
+
 exports.validateUser = async (req, res, next) => {
   try {
     // 1) getting token and checking if it's there
@@ -87,26 +88,24 @@ exports.validateUser = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
     } else if (req.cookies.jwt) token = req.cookies.jwt;
     if (!token) return new Error('you are not logged in..please login first');
-    // 2) verifacatiom of tokens
+    // 2) verification of token
     const decodedToken = await promisify(jwt.verify)(
       token,
       process.env.JWT_SECRET
     );
     // 3) check if user still exists
-    const currentUser = await User.findById(decodedToken.id);
-    if (!currentUser) {
-      return new Error('the user belonging to this token does not exist');
-    }
-    // 4) check if user changed password after token has issued
-    // if (currentUser.changedPassword(decodedToken.iat))
-    //   return next(
-    //     new AppError('User password has changed...please login again', 401)
-    //   );
+    const user = await User.findById(decodedToken.id);
+    if (!user) return new Error('User belonging to this token does not exist');
+    // check if user has changed password after token issued
 
-    req.user = currentUser;
-    //GRANT ACCESS TO PROTECTED ROUTES
+    // GRANT ACCESS TO THE ROUTES
+    req.user = user;
     next();
   } catch (err) {
-    res.status(403).json({ status: 'error', message: err.message });
+    res.status(403).json({
+      status: 'error',
+      message: 'you are not logged in...please log in again',
+      error: err,
+    });
   }
 };
