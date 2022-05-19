@@ -7,5 +7,11 @@ Abhay Garg :-
 - updated tasks.md, problems.md and solutions.md
 
 Arpit Gupta :-
+frontend design
+react components
+web app UI and UX
 
 Pankaj Kumar :-
+Database Modeling
+database queries
+image processing
