@@ -103,3 +103,6 @@ dist
 
 # prettier configuration
 .prettierrc
+
+#misc
+.DS_Store

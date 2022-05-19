@@ -1,14 +1,11 @@
-
-import React from 'react'
-import Navbar from '../components/Navbar';
-
-
+import React from "react";
+import Navbar from "../components/Navbar";
 const index = () => {
   return (
     <>
-    <Navbar/>
+<Navbar/>
     </>
-  )
-}
+  );
+};
 
 export default index;
