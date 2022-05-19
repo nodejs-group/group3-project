@@ -15,3 +15,7 @@ Pankaj Kumar :-
 Database Modeling
 database queries
 image processing
+
+Akshat:
+web server
+API Testing
