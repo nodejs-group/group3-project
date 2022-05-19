@@ -4,3 +4,6 @@
 ## G3-01
 So i'm unable to merge a pull request, it cannot resolve merge conflicts,
 So the person who made the PR did some folder structure changes..so how can we handle that issue now?
+
+## G3-01 Solution (Arpit Gupta)
+Changed the folder structure to its oreviuos state and resolved all the merge conflicts.
