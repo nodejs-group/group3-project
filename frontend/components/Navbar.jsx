@@ -4,6 +4,8 @@
 // import "./Styling/Navbar.css";
 // import notebook from "./Styling/Images/notebook.png";
 import Styles from "../styles/Navbar.module.css"
+// import postContext from "../context/post/PostState";
+import { useContext, useEffect } from "react";
 
 export const Navbar = () => {
   // let location = useLocation();
@@ -17,6 +19,16 @@ export const Navbar = () => {
   //   localStorage.removeItem("token");
   //   navigate("/login");
   // };
+
+  // const context = useContext(postContext);
+  // const { fetchPost } = context;
+  // console.log(context);
+
+useEffect(() => {
+const data = fetch("http://localhost:5000/api/v1/posts/");
+console.log(data);
+  
+});
 
   
   return (
